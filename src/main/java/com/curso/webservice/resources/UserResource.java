@@ -12,6 +12,8 @@ import com.curso.webservice.entities.User;
 public class UserResource {
 
 	
+			
+			
 	@GetMapping
 	public ResponseEntity <User> findAll(){
 		User u = new User(1L, "Aleff", "Aleff_diniz@hotmail.com", "998690562", "123");
