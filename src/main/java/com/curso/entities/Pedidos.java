@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.curso.entities.enums.PedidoStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
@@ -24,25 +25,38 @@ import lombok.Setter;
 @Table(name = "tb_pedidos")
 public class Pedidos implements Serializable {
 
-
-	 
 	private static final long serialVersionUID = 1L;
 
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
 
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Usuarios client;
+	
+	
+	private Integer pedidoStatus;
 
-	public Pedidos(Long id, Instant instant, Usuarios client) {
+	public Pedidos(Long id, Instant instant, Usuarios client,PedidoStatus pedidoStatus) {
 		super();
 		this.id = id;
 		this.moment = instant;
 		this.client = client;
+		setPedidoStatus(pedidoStatus);
+	}
+	
+	public PedidoStatus getPedidoStatus() {
+		return PedidoStatus.valueOf(pedidoStatus);
+	}
+	
+	public void setPedidoStatus(PedidoStatus pedidoStatus) {
+		if(pedidoStatus != null)
+		this.pedidoStatus = pedidoStatus.getCode();
 	}
 
 	@Override
