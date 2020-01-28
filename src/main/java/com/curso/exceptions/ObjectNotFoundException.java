@@ -1,8 +1,5 @@
 package com.curso.exceptions;
 
-import org.springframework.web.bind.annotation.ResponseStatus;
-
-@ResponseStatus(Httpstatu)
 public class ObjectNotFoundException extends RuntimeException {
 
 	/**

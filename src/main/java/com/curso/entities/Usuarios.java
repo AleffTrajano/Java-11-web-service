@@ -1,11 +1,17 @@
 package com.curso.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,11 +21,10 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @Entity
-public class User implements Serializable {
+@Table(name = "tb_usuarios")
+public class Usuarios implements Serializable {
 	
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	
 	
@@ -30,10 +35,15 @@ public class User implements Serializable {
 	private String email;
 	private String phone;
 	private String password;
+
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "client")
+	private List<Pedidos> pedidos = new ArrayList<>();
 	
 	
 	
-	public User(Long id, String nome, String email, String phone, String password) {
+	public Usuarios(Long id, String nome, String email, String phone, String password) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -43,6 +53,9 @@ public class User implements Serializable {
 	}
 	
 
+	public List<Pedidos> getPedidos() {
+		return pedidos;
+	}
 
 
 
@@ -56,7 +69,7 @@ public class User implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		Usuarios other = (Usuarios) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
