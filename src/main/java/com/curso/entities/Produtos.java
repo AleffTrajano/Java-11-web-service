@@ -19,35 +19,38 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @Entity
-
-@Table(name = "tb_categoria")
-public class Categorias implements Serializable {
-	/**
+@Table(name = "tb_Produtos")
+public class Produtos implements Serializable {/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	@Id
+	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	private String name;
-	
+	private  String nome;
+	private String descricao;
+	private String imgUrl;
+	private Double preco;
 	@Transient
-	private Set<Produtos> produtos = new HashSet<>();
+	private Set<Categorias> categorias = new HashSet<>();
 	
-	
-	public Categorias(Long id, String name) {
+	public Produtos(Long id, String nome, String descricao, String imgUrl, Double preco, Set<Categorias> categorias) {
 		super();
 		this.id = id;
-		this.name = name;
+		this.nome = nome;
+		this.descricao = descricao;
+		this.imgUrl = imgUrl;
+		this.preco = preco;
+		this.categorias = categorias;
 	}
-
-	public Set<Produtos> getProdutos(){
-		return produtos;
-	}
+	
+	
 
 
+	
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -55,9 +58,6 @@ public class Categorias implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
-
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -66,7 +66,7 @@ public class Categorias implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categorias other = (Categorias) obj;
+		Produtos other = (Produtos) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -74,7 +74,6 @@ public class Categorias implements Serializable {
 			return false;
 		return true;
 	}
-	
 	
 	
 	
