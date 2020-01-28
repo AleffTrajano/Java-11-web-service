@@ -24,9 +24,8 @@ import lombok.Setter;
 @Table(name = "tb_pedidos")
 public class Pedidos implements Serializable {
 
-	/**
-	 * 
-	 */
+
+	 
 	private static final long serialVersionUID = 1L;
 
 	@Id
