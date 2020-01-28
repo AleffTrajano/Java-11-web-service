@@ -1,4 +1,4 @@
-package com.curso.webservice.entities;
+package com.curso.entities;
 
 import java.io.Serializable;
 
@@ -8,10 +8,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
+@NoArgsConstructor
 @Entity
 public class User implements Serializable {
 	
@@ -28,6 +30,9 @@ public class User implements Serializable {
 	private String email;
 	private String phone;
 	private String password;
+	
+	
+	
 	public User(Long id, String nome, String email, String phone, String password) {
 		super();
 		this.id = id;
@@ -36,6 +41,13 @@ public class User implements Serializable {
 		this.phone = phone;
 		this.password = password;
 	}
+	
+
+
+
+
+
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
