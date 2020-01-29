@@ -8,49 +8,58 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
-@Getter
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_Produtos")
-public class Produtos implements Serializable {/**
-	 * 
-	 */
+public class Produtos implements Serializable {
+	/**
+	* 
+	*/
 	private static final long serialVersionUID = 1L;
-	
-	@Id 
+
+	@Id
+	@Getter
+	@Setter
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private  String nome;
+	@Getter
+	@Setter
+	private String nome;
+	@Getter
+	@Setter
 	private String descricao;
+	@Getter
+	@Setter
 	private String imgUrl;
+	@Getter
+	@Setter
 	private Double preco;
-	@Transient
+
+	// Conjunto de categorias
+	@Getter
+	@ManyToMany
+	@JoinTable(name = "tb_produtos_categoria", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
 	private Set<Categorias> categorias = new HashSet<>();
-	
-	public Produtos(Long id, String nome, String descricao, String imgUrl, Double preco, Set<Categorias> categorias) {
+
+	public Produtos(Long id, String nome, String descricao, String imgUrl, Double preco) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
 		this.imgUrl = imgUrl;
 		this.preco = preco;
-		this.categorias = categorias;
+
 	}
-	
-	
 
-
-	
-	
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -58,6 +67,7 @@ public class Produtos implements Serializable {/**
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -74,8 +84,5 @@ public class Produtos implements Serializable {/**
 			return false;
 		return true;
 	}
-	
-	
-	
 
 }

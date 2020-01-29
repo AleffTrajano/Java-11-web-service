@@ -19,7 +19,6 @@ public class ProdutoService {
 		return repository.findAll();
 	}
 
-
 	public Produtos findById(Long id) {
 
 		Optional<Produtos> obj = repository.findById(id);

@@ -51,16 +51,29 @@ public class TestConfig implements CommandLineRunner {
 		Categorias cat3 = new Categorias(null, "Computers"); 
 		
 		
-		//resolver amanha ?
-		Produtos p1 = new Produtos(null, "The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur.", 90.5, ca);
-		Produtos p2 = new Produtos(null, "Smart TV", "Nulla eu imperdiet purus. Maecenas ante.", 2190.0, ""); 
-		Produtos p3 = new Produtos(null, "Macbook Pro", "Nam eleifend maximus tortor, at mollis.", 1250.0, "");
-		Produtos p4 = new Produtos(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, ""); 
+		Produtos p1 = new Produtos(null, "The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur.", null, 90.5);
+		Produtos p2 = new Produtos(null, "Smart TV", "Nulla eu imperdiet purus. Maecenas ante.",null, 2190.0); 
+		Produtos p3 = new Produtos(null, "Macbook Pro", "Nam eleifend maximus tortor, at mollis.",null, 1250.0);
+		Produtos p4 = new Produtos(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.",null, 1200.0); 
+		Produtos p5 = new Produtos(null, "Livro Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", null,100.99); 
 		
 		usuariosRepository.saveAll(Arrays.asList(u1,u2));
 		pedidosRepository.saveAll(Arrays.asList(o1,o2,o3));
 		categoriaRepository.saveAll(Arrays.asList(cat1,cat2,cat3));
 		produtosRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
+		
+		
+		//associaçoes
+		p1.getCategorias().add(cat2);
+		p2.getCategorias().add(cat1);
+		p2.getCategorias().add(cat3);
+		p3.getCategorias().add(cat3);
+		p4.getCategorias().add(cat3);
+		p5.getCategorias().add(cat2);
+		
+		produtosRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
+		
+		
 		
 	}
 	

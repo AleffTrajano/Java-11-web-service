@@ -8,18 +8,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
-@Getter
 @NoArgsConstructor
 @Entity
-
 @Table(name = "tb_categoria")
 public class Categorias implements Serializable {
 	/**
@@ -29,11 +28,16 @@ public class Categorias implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Getter
+	@Setter
 	private Long id;
-	
+	@Getter
+	@Setter
 	private String name;
 	
-	@Transient
+	//conjunto de produtos
+	@JsonIgnore
+	@ManyToMany(mappedBy = "categorias")
 	private Set<Produtos> produtos = new HashSet<>();
 	
 	
@@ -55,7 +59,6 @@ public class Categorias implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
 
 
 	@Override
