@@ -9,12 +9,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.curso.entities.Categorias;
+import com.curso.entities.Pagamento;
 import com.curso.entities.PedidoItens;
 import com.curso.entities.Pedidos;
 import com.curso.entities.Produtos;
 import com.curso.entities.Usuarios;
 import com.curso.entities.enums.PedidoStatus;
 import com.curso.repositories.CategoriaRepository;
+import com.curso.repositories.PagamentoRepository;
 import com.curso.repositories.PedidoItensRepository;
 import com.curso.repositories.PedidosRepository;
 import com.curso.repositories.ProdutosRepository;
@@ -27,18 +29,16 @@ public class TestConfig implements CommandLineRunner {
 	
 	@Autowired
 	private UsuariosRepository usuariosRepository;
-	
 	@Autowired
 	private ProdutosRepository produtosRepository;
-	
 	@Autowired
 	private  PedidosRepository pedidosRepository;
-	
 	@Autowired
 	private CategoriaRepository categoriaRepository;
-	
 	@Autowired
 	private PedidoItensRepository  pedidosItensRepository;
+
+
 
 	
 	@Override
@@ -88,6 +88,9 @@ public class TestConfig implements CommandLineRunner {
 		pedidosItensRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
 		
 		 
+		Pagamento pa1 = new Pagamento(null,Instant.parse("2019-06-20T21:53:07Z"),o1);
+		o1.setPagamento(pa1);
+		pedidosRepository.save(o1);
 		 
 		
 	}

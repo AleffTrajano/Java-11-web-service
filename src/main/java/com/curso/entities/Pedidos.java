@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.curso.entities.enums.PedidoStatus;
@@ -21,8 +23,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
-@Getter
+
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_pedidos")
@@ -31,23 +32,37 @@ public class Pedidos implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	
+	@Setter
+	@Getter
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@Setter
+	@Getter
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
 
+	@Setter
+	private Integer pedidoStatus;
+
+	@Setter
+	@Getter
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Usuarios client;
 	
-	@OneToMany(mappedBy = "id.pedidos")
+	@Setter
+	@Getter
+	@OneToMany(mappedBy = "id.pedido")
 	private Set<PedidoItens> itens = new HashSet<>();
 	
+	@Setter
+	@Getter
+	@OneToOne(mappedBy ="pedido", cascade = CascadeType.ALL)
+	private Pagamento pagamento;
 	
 	
-	private Integer pedidoStatus;
 
 	public Pedidos(Long id, Instant instant, Usuarios client,PedidoStatus pedidoStatus) {
 		super();
@@ -66,9 +81,16 @@ public class Pedidos implements Serializable {
 		this.pedidoStatus = pedidoStatus.getCode();
 	}
 	
-	public Set<PedidoItens> getItens(){
-		return itens;
+	
+	public Double getTotal() {
+		double sum = 0.0;
+		for (PedidoItens item : itens) {
+			sum += item.getSubTotal();
+		}
+		return sum;
 	}
+	
+	
 
 	@Override
 	public int hashCode() {

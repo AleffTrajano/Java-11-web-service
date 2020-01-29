@@ -60,7 +60,9 @@ public class PedidoItens implements Serializable{
 		id.setProduto(produtos);
 	}
 
-	
+	public Double getSubTotal() {
+		return preco * quantidade;
+	}
 	
 	
 	
