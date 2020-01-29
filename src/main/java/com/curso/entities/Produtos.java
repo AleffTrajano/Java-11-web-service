@@ -11,7 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,11 +48,18 @@ public class Produtos implements Serializable {
 	private Double preco;
 
 	// Conjunto de categorias
+	
 	@Getter
 	@ManyToMany
-	@JoinTable(name = "tb_produtos_categoria", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
+	@JoinTable(name = "tb_produtos_categoria", 
+	joinColumns = @JoinColumn(name = "produto_id"),
+	inverseJoinColumns = @JoinColumn(name = "categoria_id"))
 	private Set<Categorias> categorias = new HashSet<>();
 
+	@OneToMany(mappedBy = "id.produto")
+	private Set<PedidoItens> items = new HashSet<>();
+	
+	
 	public Produtos(Long id, String nome, String descricao, String imgUrl, Double preco) {
 		super();
 		this.id = id;
@@ -59,6 +69,17 @@ public class Produtos implements Serializable {
 		this.preco = preco;
 
 	}
+	
+	
+	@JsonIgnore
+	public Set<Pedidos> getOrders(){
+		Set<Pedidos> set = new HashSet<>();
+		for(PedidoItens item : items) {
+			set.add(item.getPedido());
+		}
+		return set;
+	}
+	
 
 	@Override
 	public int hashCode() {
