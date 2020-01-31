@@ -46,22 +46,16 @@ public class UsuariosService {
 		}
 	}
 
-	public Usuarios update(Long id, Usuarios obj) {
-		try {
-			Usuarios entity = repository.getOne(id);
-			updateData(entity, obj);
-			return repository.save(entity);
-		} catch (EntityNotFoundException e) {
+	public Usuarios update(Long id, Usuarios usuario) {
+		if(repository.existsById(id)) {
+			usuario.setId(id);
+			repository.save(usuario);
+			return usuario;
+		} else {
 			throw new ResourceNotFoundException(id);
 		}
-	}
-
-	// so vai atualizar esses
-	private void updateData(Usuarios entity, Usuarios obj) {
-		// TODO Auto-generated method stub
-		entity.setNome(obj.getNome());
-		entity.setEmail(obj.getEmail());
-		entity.setPhone(obj.getPhone());
 
 	}
+
+
 }
