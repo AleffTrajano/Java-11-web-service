@@ -25,47 +25,43 @@ public class UsuariosService {
 		return repository.findAll();
 	}
 
-
 	public Usuarios findById(Long id) {
 
 		Optional<Usuarios> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
-	
+
 	public Usuarios insert(Usuarios obj) {
 		return repository.save(obj);
 	}
 
-
 	public void deletarUsuario(Long id) {
-		
-		
+
 		try {
 			repository.deleteById(id);
-		}catch (EmptyResultDataAccessException e) {
+		} catch (EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException(id);
-		}catch(DataIntegrityViolationException e) {
+		} catch (DataIntegrityViolationException e) {
 			throw new DatabaseException(e.getMessage());
 		}
 	}
-		
-	
+
 	public Usuarios update(Long id, Usuarios obj) {
 		try {
-		Usuarios entity = repository.getOne(id);
-		updateData(entity,obj);
-		return repository.save(entity);
-	} catch(EntityNotFoundException e) {
-		throw new ResourceNotFoundException(id);
-	}
+			Usuarios entity = repository.getOne(id);
+			updateData(entity, obj);
+			return repository.save(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
-	//so vai atualizar esses
+	// so vai atualizar esses
 	private void updateData(Usuarios entity, Usuarios obj) {
 		// TODO Auto-generated method stub
 		entity.setNome(obj.getNome());
 		entity.setEmail(obj.getEmail());
 		entity.setPhone(obj.getPhone());
-		
+
 	}
 }
