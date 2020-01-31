@@ -29,4 +29,10 @@ public class UsuariosService {
 	public Usuarios insert(Usuarios obj) {
 		return repository.save(obj);
 	}
+
+
+	public void deletarUsuario(Long id) {
+		// TODO Auto-generated method stub
+		repository.deleteById(id);
+	}
 }
