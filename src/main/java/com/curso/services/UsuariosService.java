@@ -35,4 +35,22 @@ public class UsuariosService {
 		// TODO Auto-generated method stub
 		repository.deleteById(id);
 	}
+	
+	
+	public Usuarios update(Long id, Usuarios obj) {
+		
+		Usuarios entity = repository.getOne(id);
+		updateData(entity,obj);
+		return repository.save(entity);
+	}
+
+
+	//so vai atualizar esses
+	private void updateData(Usuarios entity, Usuarios obj) {
+		// TODO Auto-generated method stub
+		entity.setNome(obj.getNome());
+		entity.setEmail(obj.getEmail());
+		entity.setPhone(obj.getPhone());
+		
+	}
 }
